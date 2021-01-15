@@ -1,16 +1,22 @@
 import React from 'react';
 import Card from './Card.jsx';
 import Banner from './Banner.jsx';
-import { Link } from 'react-router-dom';
+import TopHeader from './TopHeader.jsx';
+import Footer from './Footer.jsx';
 
 class Main extends React.Component {
   render() {
     return (
         <div>
+          {/* <Header/> */}
+
+          <TopHeader/>
+          
           <Banner/>
-          <Link to="/product" style={{ textDecoration: "none" }}>
-            <Card/>
-          </Link>
+          
+          <Card/>
+          
+          <Footer/>
         </div>
     )
   }

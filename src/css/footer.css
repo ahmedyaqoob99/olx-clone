@@ -1,43 +1,11 @@
 /*FOOTER*/
-
-.col-12>div {
-    display: inline-block;
-}
-
-#bottomFooter {
+.bottomFooter {
     background-color: #002f34;
     color: #fff;
-    height: 40px;
+    height: auto;
+    text-align: center;
+    width: 100%;
 }
-
-footer {
-    background: #fff;
-    color: black;
-    margin-top: 100px;
-}
-
-footer a {
-    color: black;
-    font-size: 14px;
-    transition-duration: 0.2s;
-}
-
-footer a:hover {
-    color: #FA944B;
-    text-decoration: none;
-}
-
-.copy {
-    font-size: 12px;
-    padding: 10px;
-    border-top: 1px solid black;
-}
-
-.footer-middle {
-    padding-top: 2em;
-    color: black;
-}
-
 
 /*SOCİAL İCONS*/
 

@@ -1,16 +1,12 @@
 import React,{Component} from 'react';
-import image from '../images/image.webp';
-import image1 from '../images/image1.webp';
-import image2 from '../images/image2.webp';
-import image3 from '../images/image3.webp';
-import image4 from '../images/image4.webp';
-import image5 from '../images/staticmap.png';
-import {Carousel} from 'react-bootstrap';
+import {Carousel, Col, Container, Row, Spinner} from 'react-bootstrap';
+import TopHeader from './TopHeader.jsx';
+import Footer from './Footer.jsx';
 
 class PriceBox extends Component{
     render(){
         return(
-            <div className="border p-3 rounded">
+            <div className="border mt-4 p-3 rounded">
                 <h1>Rs 13,000</h1>
                 <p className="text-muted">Poco X3, Poco F2 Pro, Mi 10, Mi Note 10 Lite, 9C, 9 Pro, 9s</p>
                 <p className="text-muted text-right">Nov 06</p>
@@ -22,10 +18,10 @@ class PriceBox extends Component{
 class Map extends Component{
     render(){
         return(
-            <div className="border p-3 mt-4 rounded">
-                <h3>Posted in</h3>
-                <p className="text-muted">DHA Phase 1, Karachi, Sindh</p>
-                <img src={image5} alt="" style={{ width:300}} />
+            <div className="border mt-4 rounded">
+                <h3 className="px-3">Posted in</h3>
+                <p className="text-muted px-3">DHA Phase 1, Karachi, Sindh</p>
+                {/* <img src={image5} alt="" style={{width:"205px",padding:"1%"}} /> */}
             </div>
         )
     }
@@ -88,75 +84,39 @@ class Detail extends Component{
 }
 
 class Product extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoad: false,
+            id: this.props.match.params.id,
+            dataFromJsons: null
+        };
+      }
+
+    componentDidMount(){
+        const url = `http://jsonplaceholder.typicode.com/photos/${this.state.id}`;
+        fetch(url)
+        .then(res => res.json())
+        .then(res => this.setState({ dataFromJsons: res, isLoad: true}) )
+    }
     render(){
         return(
-            <div className="container">
-                <div className="row">
-                    <div className="col-8">
+            <>
+            <TopHeader/>
+            <Container>
+                <Row>
+                    <Col md={8} xs={12}>
                         <div className="border rounded">
                             <Carousel>
                                 <Carousel.Item>
                                     <img
                                     className="d-block w-100"
-                                    src={image}
+                                    src={this.state.isLoad ? this.state.dataFromJsons.url : <div className="mx-auto"><Spinner animation="grow" /></div>}
                                     alt="First slide"
                                     style={{ height: 550 }}
                                     />
                                     <Carousel.Caption>
-                                    <h3>First slide label</h3>
-                                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <img
-                                    className="d-block w-100"
-                                    src={image1}
-                                    alt="Third slide"
-                                    style={{ height: 550 }}
-                                    />
-
-                                    <Carousel.Caption>
-                                    <h3>Second slide label</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <img
-                                    className="d-block w-100"
-                                    src={image2}
-                                    alt="Third slide"
-                                    style={{ height: 550 }}
-                                    />
-
-                                    <Carousel.Caption>
-                                    <h3>Third slide label</h3>
-                                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <img
-                                    className="d-block w-100"
-                                    src={image3}
-                                    alt="Third slide"
-                                    style={{ height: 550 }}
-                                    />
-
-                                    <Carousel.Caption>
-                                    <h3>Third slide label</h3>
-                                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <img
-                                    className="d-block w-100"
-                                    src={image4}
-                                    alt="Third slide"
-                                    style={{ height: 550 }}
-                                    />
-
-                                    <Carousel.Caption>
-                                    <h3>Third slide label</h3>
-                                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                                    <h3>{this.state.isLoad && this.state.dataFromJsons.title}</h3>
                                     </Carousel.Caption>
                                 </Carousel.Item>
                             </Carousel>
@@ -164,13 +124,16 @@ class Product extends Component{
                         <div className="border border-dark rounded mt-1">
                             <Detail />
                         </div>
-                    </div>
-                    <div className="col-4">
+                    </Col>
+                    <Col md={4} xs={12}>
                         <PriceBox/>
                         <Map/>
-                    </div>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+            </Container>
+            
+          <Footer/>
+          </>
         )
     }
 }
